@@ -1,9 +1,0 @@
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release	0.026s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/builder/amazon/chroot	0.037s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/builder/amazon/common	0.019s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/builder/amazon/release	0.032s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/command	0.094s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/plugin/builder-amazon-ebs	0.019s
-?   	_/Users/ange/Infra/packer-plugins/packer-builder-release/scripts	[no test files]
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/template	0.040s
-ok  	_/Users/ange/Infra/packer-plugins/packer-builder-release/template/interpolate	0.011s

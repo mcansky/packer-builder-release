@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/mcansky/packer-builder-release/builder/amazon/release"
 	"github.com/mitchellh/packer/packer/plugin"
+  "github.com/mcansky/packer-builder-release/builder/amazon/release"
 )
 
 func main() {

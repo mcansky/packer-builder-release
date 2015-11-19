@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # This script builds the application from source for multiple platforms.
 set -e
@@ -16,7 +16,7 @@ GIT_COMMIT=$(git rev-parse HEAD)
 GIT_DIRTY=$(test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 
 # If its dev mode, only build for ourself
-if [ "${PACKER_DEV}x" != "x" ]; then
+if [ "${TF_DEV}x" != "x" ]; then
     XC_OS=${XC_OS:-$(go env GOOS)}
     XC_ARCH=${XC_ARCH:-$(go env GOARCH)}
 fi
@@ -27,7 +27,7 @@ XC_OS=${XC_OS:-linux darwin windows freebsd openbsd}
 
 # Install dependencies
 echo "==> Getting dependencies..."
-go get -d ./...
+go get ./...
 
 # Delete the old dir
 echo "==> Removing old directory..."
@@ -42,9 +42,17 @@ gox \
     -os="${XC_OS}" \
     -arch="${XC_ARCH}" \
     -ldflags "-X main.GitCommit ${GIT_COMMIT}${GIT_DIRTY}" \
-    -output "pkg/{{.OS}}_{{.Arch}}/packer" \
-    .
+    -output "pkg/{{.OS}}_{{.Arch}}/packer-{{.Dir}}" \
+    ./...
 set -e
+
+# Make sure "packer-packer" is renamed properly
+#for PLATFORM in $(find ./pkg -mindepth 1 -maxdepth 1 -type d); do
+#    set +e
+#    mv ${PLATFORM}/packer-packer.exe ${PLATFORM}/packer.exe 2>/dev/null
+#    mv ${PLATFORM}/packer-packer ${PLATFORM}/packer 2>/dev/null
+#    set -e
+#done
 
 # Move all the compiled things to the $GOPATH/bin
 GOPATH=${GOPATH:-$(go env GOPATH)}
@@ -54,16 +62,7 @@ case $(uname) in
         ;;
 esac
 OLDIFS=$IFS
-IFS=:
-case $(uname) in
-    MINGW*)
-        IFS=";"
-        ;;
-    MSYS*)
-        IFS=";"
-        ;;
-esac
-MAIN_GOPATH=($GOPATH)
+IFS=: MAIN_GOPATH=($GOPATH)
 IFS=$OLDIFS
 
 # Copy our OS/Arch to the bin/ directory
