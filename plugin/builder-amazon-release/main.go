@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mitchellh/packer/builder/amazon/ebs"
+	"github.com/mcansky/packer-builder-release/builder/amazon/release"
 	"github.com/mitchellh/packer/packer/plugin"
 )
 
@@ -10,6 +10,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	server.RegisterBuilder(new(ebs.Builder))
+	server.RegisterBuilder(new(release.Builder))
 	server.Serve()
 }
